@@ -1,12 +1,13 @@
 import { Plane, Instagram, Linkedin, Github, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const quickLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Team', href: '#team' },
-  { name: 'Achievements', href: '#achievements' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Team', href: '/team' },
+  { name: 'Achievements', href: '/achievements' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 const socialLinks = [
@@ -17,20 +18,13 @@ const socialLinks = [
 ];
 
 export function Footer() {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <footer className="hero-gradient text-primary-foreground">
       <div className="container-custom section-padding pb-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <a href="#home" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-lg accent-gradient flex items-center justify-center">
                 <Plane className="w-6 h-6 text-accent-foreground" />
               </div>
@@ -38,7 +32,7 @@ export function Footer() {
                 <span className="font-display font-bold text-lg">AERO</span>
                 <span className="font-display font-bold text-lg text-accent">CLUB</span>
               </div>
-            </a>
+            </Link>
             <p className="text-primary-foreground/70 max-w-md mb-6">
               SASTRA University's premier aeromodelling club, fostering innovation in aerospace 
               engineering through hands-on experience in RC aircraft, drones, and UAV development.
@@ -63,12 +57,12 @@ export function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
+                  <Link
+                    to={link.href}
                     className="text-primary-foreground/70 hover:text-accent transition-colors"
                   >
                     {link.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
