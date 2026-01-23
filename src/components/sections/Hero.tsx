@@ -1,16 +1,10 @@
 import { motion } from 'framer-motion';
 import { ChevronDown, Rocket, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-aircraft.jpg';
 
 export function Hero() {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
@@ -30,12 +24,12 @@ export function Hero() {
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-accent/30 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [null, -100],
+              y: [0, -100],
               opacity: [0, 1, 0],
             }}
             transition={{
@@ -48,7 +42,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-custom text-center px-4">
+      <div className="relative z-10 container-custom text-center px-4 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,17 +81,19 @@ export function Hero() {
             <Button
               variant="hero"
               size="xl"
-              onClick={() => scrollToSection('#contact')}
+              asChild
             >
-              <Target className="w-5 h-5" />
-              Join Us
+              <Link to="/contact">
+                <Target className="w-5 h-5" />
+                Join Us
+              </Link>
             </Button>
             <Button
               variant="heroOutline"
               size="xl"
-              onClick={() => scrollToSection('#projects')}
+              asChild
             >
-              Our Projects
+              <Link to="/projects">Our Projects</Link>
             </Button>
           </motion.div>
 
@@ -128,13 +124,7 @@ export function Hero() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <button
-          onClick={() => scrollToSection('#about')}
-          className="flex flex-col items-center gap-2 text-primary-foreground/60 hover:text-accent transition-colors"
-        >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <ChevronDown className="w-5 h-5" />
-        </button>
+        <ChevronDown className="w-6 h-6 text-primary-foreground/60" />
       </motion.div>
     </section>
   );
