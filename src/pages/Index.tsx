@@ -12,28 +12,24 @@ const quickLinks = [
     title: 'Our Projects',
     description: 'Explore our RC aircraft, drones, and UAV builds',
     href: '/projects',
-    color: 'bg-secondary/10 text-secondary',
   },
   {
     icon: Users,
     title: 'Meet the Team',
     description: 'The passionate minds behind our innovations',
     href: '/team',
-    color: 'bg-accent/10 text-accent',
   },
   {
     icon: Trophy,
     title: 'Achievements',
     description: 'Awards and recognitions we\'ve earned',
     href: '/achievements',
-    color: 'bg-primary/10 text-primary',
   },
   {
     icon: Calendar,
     title: 'Events',
     description: 'Workshops and competitions we organize',
     href: '/events',
-    color: 'bg-secondary/10 text-secondary',
   },
 ];
 
@@ -53,7 +49,7 @@ const Index = () => {
             className="text-center mb-12"
           >
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Explore <span className="text-gradient">AeroClub</span>
+              Explore <span className="text-gradient inline-block">ACS</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Discover what makes us the premier aeromodelling club at SASTRA University
@@ -73,7 +69,7 @@ const Index = () => {
                   to={link.href}
                   className="block p-6 rounded-xl bg-card card-hover border border-border/50 group"
                 >
-                  <div className={`w-12 h-12 rounded-lg ${link.color} flex items-center justify-center mb-4`}>
+                  <div className="w-12 h-12 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
                     <link.icon className="w-6 h-6" />
                   </div>
                   <h3 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">

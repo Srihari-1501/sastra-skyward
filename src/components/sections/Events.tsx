@@ -1,65 +1,74 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Calendar, MapPin, Clock, Users, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Clock, ArrowRight, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
-const upcomingEvents = [
+export interface EventData {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+  type: string;
+  registrationLink: string;
+  isUpcoming: boolean;
+}
+
+const defaultEvents: EventData[] = [
   {
+    id: '1',
     title: 'Aerodynamics Workshop',
     date: 'Feb 15, 2025',
     time: '10:00 AM - 4:00 PM',
     location: 'Main Auditorium',
     description: 'Learn the fundamentals of aircraft aerodynamics and wing design principles.',
     type: 'Workshop',
-    seats: '50 seats available',
+    registrationLink: '',
+    isUpcoming: true,
   },
   {
+    id: '2',
     title: 'Flight Simulator Training',
     date: 'Feb 22, 2025',
     time: '2:00 PM - 6:00 PM',
     location: 'Simulation Lab',
     description: 'Hands-on training with professional RC flight simulators.',
     type: 'Training',
-    seats: '20 seats available',
+    registrationLink: '',
+    isUpcoming: true,
   },
   {
+    id: '3',
     title: 'Annual Air Show',
     date: 'Mar 10, 2025',
     time: '9:00 AM - 5:00 PM',
     location: 'University Ground',
     description: 'Annual showcase of all club projects with live flight demonstrations.',
     type: 'Event',
-    seats: 'Open to all',
-  },
-];
-
-const pastEvents = [
-  {
-    title: 'CAD Design Bootcamp',
-    date: 'Jan 2025',
-    attendees: '45 participants',
-  },
-  {
-    title: 'Drone Building Workshop',
-    date: 'Dec 2024',
-    attendees: '30 participants',
-  },
-  {
-    title: 'Flight Control Systems Seminar',
-    date: 'Nov 2024',
-    attendees: '60 participants',
-  },
-  {
-    title: 'Industry Expert Talk',
-    date: 'Oct 2024',
-    attendees: '100 participants',
+    registrationLink: '',
+    isUpcoming: true,
   },
 ];
 
 export function Events() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  // Load events from localStorage (admin-managed) or use defaults
+  const getEvents = (): EventData[] => {
+    try {
+      const stored = localStorage.getItem('acs-events');
+      if (stored) return JSON.parse(stored);
+    } catch {}
+    return defaultEvents;
+  };
+
+  const events = getEvents();
+  const upcomingEvents = events.filter(e => e.isUpcoming);
+  const pastEvents = events.filter(e => !e.isUpcoming);
 
   return (
     <section id="events" className="section-padding bg-background">
@@ -82,72 +91,68 @@ export function Events() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Upcoming Events */}
-          <div className="lg:col-span-2">
+        {/* Upcoming Events */}
+        {upcomingEvents.length > 0 && (
+          <div className="mb-12">
             <h3 className="font-display text-xl font-bold text-foreground mb-6">Upcoming Events</h3>
-            <div className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {upcomingEvents.map((event, index) => (
                 <motion.div
-                  key={event.title}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  key={event.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 + 0.1 * index }}
-                  className="card-gradient rounded-xl p-6 card-hover border border-border group"
+                  className="card-gradient rounded-xl p-6 card-hover border border-border group flex flex-col"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-                          {event.type}
-                        </span>
-                        <span className="text-sm text-muted-foreground flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          {event.seats}
-                        </span>
-                      </div>
-                      <h4 className="font-display text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors">
-                        {event.title}
-                      </h4>
-                      <p className="text-sm text-muted-foreground mb-3">{event.description}</p>
-                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4 text-accent" />
-                          {event.date}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4 text-accent" />
-                          {event.time}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4 text-accent" />
-                          {event.location}
-                        </span>
-                      </div>
-                    </div>
-                    <Button variant="accent" size="sm" className="md:self-center">
-                      Register
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
+                      {event.type}
+                    </span>
                   </div>
+                  <h4 className="font-display text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors">
+                    {event.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">{event.description}</p>
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                    <span className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-accent" />
+                      {event.date}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-accent" />
+                      {event.time}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-accent" />
+                      {event.location}
+                    </span>
+                  </div>
+                  {event.registrationLink ? (
+                    <a href={event.registrationLink} target="_blank" rel="noopener noreferrer">
+                      <Button variant="accent" size="sm" className="w-full">
+                        Register <ExternalLink className="w-4 h-4" />
+                      </Button>
+                    </a>
+                  ) : (
+                    <Button variant="accent" size="sm" className="w-full" disabled>
+                      Registration Coming Soon
+                    </Button>
+                  )}
                 </motion.div>
               ))}
             </div>
           </div>
+        )}
 
-          {/* Past Events */}
+        {/* Past Events */}
+        {pastEvents.length > 0 && (
           <div>
             <h3 className="font-display text-xl font-bold text-foreground mb-6">Past Events</h3>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="card-gradient rounded-xl p-6 border border-border"
-            >
+            <div className="card-gradient rounded-xl p-6 border border-border">
               <div className="space-y-4">
-                {pastEvents.map((event, index) => (
+                {pastEvents.map((event) => (
                   <div
-                    key={event.title}
+                    key={event.id}
                     className="flex items-center justify-between py-3 border-b border-border last:border-0"
                   >
                     <div>
@@ -155,14 +160,24 @@ export function Events() {
                       <p className="text-xs text-muted-foreground">{event.date}</p>
                     </div>
                     <span className="text-xs text-accent bg-accent/10 px-2 py-1 rounded-full">
-                      {event.attendees}
+                      {event.type}
                     </span>
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Link to individual event pages */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-8 text-sm text-muted-foreground"
+        >
+          Share individual event registration links with your members via the admin panel.
+        </motion.div>
       </div>
     </section>
   );
