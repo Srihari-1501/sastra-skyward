@@ -7,9 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 const socialLinks = [
-  { icon: Instagram, label: 'Instagram', href: '#', color: 'hover:text-pink-500' },
-  { icon: Linkedin, label: 'LinkedIn', href: '#', color: 'hover:text-blue-500' },
-  { icon: Github, label: 'GitHub', href: '#', color: 'hover:text-foreground' },
+  { icon: Instagram, label: 'Instagram', href: '#', color: 'hover:text-accent' },
+  { icon: Linkedin, label: 'LinkedIn', href: '#', color: 'hover:text-accent' },
+  { icon: Github, label: 'GitHub', href: '#', color: 'hover:text-accent' },
 ];
 
 const contactInfo = [
@@ -52,13 +52,13 @@ export function Contact() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            Join Us
+            Contact
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Ready to Take Flight?
+            Get In Touch
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Join our community of aerospace enthusiasts and start your journey in aeromodelling.
+            Have a question or want to collaborate? Reach out to us.
           </p>
         </motion.div>
 
@@ -70,40 +70,34 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="card-gradient rounded-2xl p-8 border border-border">
-              <h3 className="font-display text-xl font-bold text-foreground mb-6">Membership Form</h3>
+              <h3 className="font-display text-xl font-bold text-foreground mb-6">Send us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      First Name
+                      Name
                     </label>
-                    <Input placeholder="John" required />
+                    <Input placeholder="Your name" required />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Last Name
+                      Email
                     </label>
-                    <Input placeholder="Doe" required />
+                    <Input type="email" placeholder="you@example.com" required />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Email
+                    Subject
                   </label>
-                  <Input type="email" placeholder="john@sastra.ac.in" required />
+                  <Input placeholder="What's this about?" required />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Department & Year
-                  </label>
-                  <Input placeholder="Mechanical Engineering, 2nd Year" required />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Why do you want to join?
+                    Message
                   </label>
                   <Textarea
-                    placeholder="Tell us about your interest in aeromodelling..."
+                    placeholder="Write your message here..."
                     rows={4}
                     required
                   />
@@ -118,12 +112,12 @@ export function Contact() {
                   {isSubmitted ? (
                     <>
                       <CheckCircle className="w-5 h-5" />
-                      Application Submitted!
+                      Message Sent!
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      Submit Application
+                      Send Message
                     </>
                   )}
                 </Button>

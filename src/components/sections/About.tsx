@@ -47,7 +47,7 @@ export function About() {
             Where Dreams Take Flight
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            For over a decade, the SASTRA Aeromodelling Club has been nurturing the next generation 
+            The Aeromodelling Club at SASTRA (ACS) has been nurturing the next generation 
             of aerospace engineers and aviation enthusiasts.
           </p>
         </motion.div>
@@ -77,8 +77,8 @@ export function About() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="card-gradient p-8 rounded-2xl card-hover border border-border"
           >
-            <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-6">
-              <Compass className="w-6 h-6 text-secondary-foreground" />
+            <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-6">
+              <Compass className="w-6 h-6 text-accent" />
             </div>
             <h3 className="font-display text-xl font-bold text-foreground mb-3">Our Vision</h3>
             <p className="text-muted-foreground">
@@ -119,7 +119,7 @@ export function About() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 p-8 rounded-2xl hero-gradient text-center"
+          className="mt-16 p-8 rounded-2xl bg-primary text-center"
         >
           <h3 className="font-display text-xl font-bold text-primary-foreground mb-2">Faculty Advisor</h3>
           <p className="text-2xl font-semibold text-accent mb-1">Dr. Ramesh Kumar</p>

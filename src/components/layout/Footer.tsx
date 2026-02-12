@@ -1,5 +1,6 @@
-import { Plane, Instagram, Linkedin, Github, Mail } from 'lucide-react';
+import { Instagram, Linkedin, Github, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import acsLogo from '@/assets/acs-logo.png';
 
 const quickLinks = [
   { name: 'Home', href: '/' },
@@ -19,22 +20,19 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="hero-gradient text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground">
       <div className="container-custom section-padding pb-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg accent-gradient flex items-center justify-center">
-                <Plane className="w-6 h-6 text-accent-foreground" />
-              </div>
+            <Link to="/" className="flex items-center gap-3 mb-4">
+              <img src={acsLogo} alt="ACS Logo" className="w-10 h-10 object-contain" />
               <div>
-                <span className="font-display font-bold text-lg">AERO</span>
-                <span className="font-display font-bold text-lg text-accent">CLUB</span>
+                <span className="font-display font-bold text-lg text-primary-foreground">ACS</span>
               </div>
             </Link>
             <p className="text-primary-foreground/70 max-w-md mb-6">
-              SASTRA University's premier aeromodelling club, fostering innovation in aerospace 
+              Aeromodelling Club at SASTRA — fostering innovation in aerospace 
               engineering through hands-on experience in RC aircraft, drones, and UAV development.
             </p>
             <div className="flex gap-3">
@@ -87,7 +85,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-primary-foreground/60">
-            © {new Date().getFullYear()} SASTRA Aeromodelling Club. All rights reserved.
+            © {new Date().getFullYear()} Aeromodelling Club at SASTRA (ACS). All rights reserved.
           </p>
           <p className="text-sm text-primary-foreground/60">
             Design. Build. Fly.

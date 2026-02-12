@@ -48,13 +48,6 @@ const achievements = [
   },
 ];
 
-const stats = [
-  { value: '15+', label: 'Competition Wins' },
-  { value: '25+', label: 'Certifications' },
-  { value: '50+', label: 'Projects Completed' },
-  { value: '10+', label: 'Years of Excellence' },
-];
-
 export function Achievements() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -69,7 +62,7 @@ export function Achievements() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/20 text-secondary text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
             Achievements
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
@@ -80,26 +73,6 @@ export function Achievements() {
           </p>
         </motion.div>
 
-        {/* Stats Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-        >
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className="text-center p-6 rounded-xl hero-gradient"
-            >
-              <div className="font-display text-3xl md:text-4xl font-bold text-accent mb-1">
-                {stat.value}
-              </div>
-              <div className="text-primary-foreground/80 text-sm">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
-
         {/* Achievements Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {achievements.map((achievement, index) => (
@@ -107,7 +80,7 @@ export function Achievements() {
               key={achievement.title}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 + 0.1 * index }}
+              transition={{ duration: 0.5, delay: 0.2 + 0.1 * index }}
               className="card-gradient rounded-xl p-6 card-hover border border-border group"
             >
               <div className="flex items-start gap-4">
@@ -117,7 +90,7 @@ export function Achievements() {
                 <div>
                   <span className="text-xs text-muted-foreground">{achievement.year}</span>
                   <h3 className="font-display font-bold text-foreground mb-1">{achievement.title}</h3>
-                  <p className="text-sm text-secondary font-medium mb-2">{achievement.event}</p>
+                  <p className="text-sm text-accent font-medium mb-2">{achievement.event}</p>
                   <p className="text-sm text-muted-foreground">{achievement.description}</p>
                 </div>
               </div>

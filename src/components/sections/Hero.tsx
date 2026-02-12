@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ChevronDown, Rocket, Target } from 'lucide-react';
+import { ChevronDown, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-aircraft.jpg';
@@ -14,16 +14,16 @@ export function Hero() {
           alt="RC Aircraft in flight"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 hero-gradient opacity-80" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
       </div>
 
       {/* Animated Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-accent/30 rounded-full"
+            className="absolute w-1 h-1 bg-accent/40 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -55,20 +55,22 @@ export function Hero() {
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30 mb-6"
           >
-            <Rocket className="w-4 h-4 text-accent" />
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-glow" />
             <span className="text-sm font-medium text-primary-foreground">SASTRA University</span>
           </motion.div>
 
           {/* Main Heading */}
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-4 leading-tight">
             <span className="block">Design. Build.</span>
-            <span className="text-gradient">Fly.</span>
+            <span className="text-gradient inline-block pb-2">Fly.</span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-            Join the premier aeromodelling club pushing the boundaries of RC aircraft, 
-            drones, and aerospace innovation at SASTRA University.
+          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-4">
+            Aeromodelling Club at SASTRA
+          </p>
+          <p className="text-base md:text-lg text-primary-foreground/60 max-w-xl mx-auto mb-8">
+            Pushing the boundaries of RC aircraft, drones, and aerospace innovation.
           </p>
 
           {/* CTA Buttons */}
@@ -85,7 +87,7 @@ export function Hero() {
             >
               <Link to="/contact">
                 <Target className="w-5 h-5" />
-                Join Us
+                Contact Us
               </Link>
             </Button>
             <Button
@@ -95,25 +97,6 @@ export function Hero() {
             >
               <Link to="/projects">Our Projects</Link>
             </Button>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="grid grid-cols-3 gap-8 mt-16 max-w-xl mx-auto"
-          >
-            {[
-              { value: '50+', label: 'Projects' },
-              { value: '15+', label: 'Awards' },
-              { value: '100+', label: 'Members' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-3xl md:text-4xl font-bold text-accent">{stat.value}</div>
-                <div className="text-sm text-primary-foreground/70">{stat.label}</div>
-              </div>
-            ))}
           </motion.div>
         </motion.div>
       </div>
