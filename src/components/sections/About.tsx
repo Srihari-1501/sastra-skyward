@@ -122,7 +122,7 @@ export function About() {
           className="mt-16 p-8 rounded-2xl bg-primary text-center"
         >
           <h3 className="font-display text-xl font-bold text-primary-foreground mb-2">Faculty Advisor</h3>
-          <p className="text-2xl font-semibold text-accent mb-1">Dr. Ramesh Kumar</p>
+          <p className="text-2xl font-semibold text-accent mb-1">Dr. Venkatesh</p>
           <p className="text-primary-foreground/80">Professor, Department of Mechanical Engineering</p>
           <p className="text-primary-foreground/60 text-sm mt-2">
             20+ years of experience in aerospace research and UAV development
