@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Calendar, MapPin, Clock, ArrowRight, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, Clock, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface EventData {
   id: string;
@@ -13,67 +14,32 @@ export interface EventData {
   location: string;
   description: string;
   type: string;
-  registrationLink: string;
-  isUpcoming: boolean;
+  registration_link: string;
+  is_upcoming: boolean;
 }
-
-const defaultEvents: EventData[] = [
-  {
-    id: '1',
-    title: 'Aerodynamics Workshop',
-    date: 'Feb 15, 2025',
-    time: '10:00 AM - 4:00 PM',
-    location: 'Main Auditorium',
-    description: 'Learn the fundamentals of aircraft aerodynamics and wing design principles.',
-    type: 'Workshop',
-    registrationLink: '',
-    isUpcoming: true,
-  },
-  {
-    id: '2',
-    title: 'Flight Simulator Training',
-    date: 'Feb 22, 2025',
-    time: '2:00 PM - 6:00 PM',
-    location: 'Simulation Lab',
-    description: 'Hands-on training with professional RC flight simulators.',
-    type: 'Training',
-    registrationLink: '',
-    isUpcoming: true,
-  },
-  {
-    id: '3',
-    title: 'Annual Air Show',
-    date: 'Mar 10, 2025',
-    time: '9:00 AM - 5:00 PM',
-    location: 'University Ground',
-    description: 'Annual showcase of all club projects with live flight demonstrations.',
-    type: 'Event',
-    registrationLink: '',
-    isUpcoming: true,
-  },
-];
 
 export function Events() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  // Load events from localStorage (admin-managed) or use defaults
-  const getEvents = (): EventData[] => {
-    try {
-      const stored = localStorage.getItem('acs-events');
-      if (stored) return JSON.parse(stored);
-    } catch {}
-    return defaultEvents;
-  };
+  const { data: events = [] } = useQuery({
+    queryKey: ['events'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data as EventData[];
+    },
+  });
 
-  const events = getEvents();
-  const upcomingEvents = events.filter(e => e.isUpcoming);
-  const pastEvents = events.filter(e => !e.isUpcoming);
+  const upcomingEvents = events.filter(e => e.is_upcoming);
+  const pastEvents = events.filter(e => !e.is_upcoming);
 
   return (
     <section id="events" className="section-padding bg-background">
       <div className="container-custom" ref={ref}>
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -91,7 +57,6 @@ export function Events() {
           </p>
         </motion.div>
 
-        {/* Upcoming Events */}
         {upcomingEvents.length > 0 && (
           <div className="mb-12">
             <h3 className="font-display text-xl font-bold text-foreground mb-6">Upcoming Events</h3>
@@ -127,8 +92,8 @@ export function Events() {
                       {event.location}
                     </span>
                   </div>
-                  {event.registrationLink ? (
-                    <a href={event.registrationLink} target="_blank" rel="noopener noreferrer">
+                  {event.registration_link ? (
+                    <a href={event.registration_link} target="_blank" rel="noopener noreferrer">
                       <Button variant="accent" size="sm" className="w-full">
                         Register <ExternalLink className="w-4 h-4" />
                       </Button>
@@ -144,7 +109,6 @@ export function Events() {
           </div>
         )}
 
-        {/* Past Events */}
         {pastEvents.length > 0 && (
           <div>
             <h3 className="font-display text-xl font-bold text-foreground mb-6">Past Events</h3>
@@ -168,16 +132,6 @@ export function Events() {
             </div>
           </div>
         )}
-
-        {/* Link to individual event pages */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-8 text-sm text-muted-foreground"
-        >
-          Share individual event registration links with your members via the admin panel.
-        </motion.div>
       </div>
     </section>
   );

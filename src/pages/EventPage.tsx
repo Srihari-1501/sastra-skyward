@@ -1,26 +1,28 @@
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { Calendar, Clock, MapPin, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, MapPin, ExternalLink, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import type { EventData } from '@/components/sections/Events';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const EventPage = () => {
   const { eventId } = useParams();
 
-  const getEvent = (): EventData | null => {
-    try {
-      const stored = localStorage.getItem('acs-events');
-      if (stored) {
-        const events: EventData[] = JSON.parse(stored);
-        return events.find(e => e.id === eventId) || null;
-      }
-    } catch {}
-    return null;
-  };
-
-  const event = getEvent();
+  const { data: event, isLoading } = useQuery({
+    queryKey: ['event', eventId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .eq('id', eventId!)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!eventId,
+  });
 
   return (
     <main className="min-h-screen">
@@ -31,16 +33,20 @@ const EventPage = () => {
             <ArrowLeft className="w-4 h-4" /> Back to Events
           </Link>
 
-          {event ? (
+          {isLoading ? (
+            <div className="flex justify-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-accent" />
+            </div>
+          ) : event ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="card-gradient rounded-2xl p-8 md:p-12 border border-border"
+              className="card-gradient rounded-2xl p-6 md:p-12 border border-border"
             >
               <span className="inline-block px-4 py-1.5 rounded-full bg-accent text-accent-foreground text-sm font-semibold mb-4">
                 {event.type}
               </span>
-              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+              <h1 className="font-display text-2xl md:text-4xl font-bold text-foreground mb-6">
                 {event.title}
               </h1>
               <p className="text-muted-foreground text-lg mb-8">{event.description}</p>
@@ -69,8 +75,8 @@ const EventPage = () => {
                 </div>
               </div>
 
-              {event.registrationLink ? (
-                <a href={event.registrationLink} target="_blank" rel="noopener noreferrer">
+              {event.registration_link ? (
+                <a href={event.registration_link} target="_blank" rel="noopener noreferrer">
                   <Button variant="accent" size="lg" className="w-full sm:w-auto">
                     Register Now <ExternalLink className="w-5 h-5" />
                   </Button>

@@ -50,10 +50,8 @@ export function Navbar() {
               whileHover={{ scale: 1.02 }}
               className="flex items-center gap-3"
             >
-              <img src={acsLogo} alt="ACS Logo" className="w-10 h-10 object-contain" />
-              <div className="hidden sm:block">
-                <span className="font-display font-bold text-lg text-primary-foreground">ACS</span>
-              </div>
+              <img src={acsLogo} alt="ACS Logo" className="w-10 h-10 object-contain rounded-full" />
+              <span className="font-display font-bold text-lg text-primary-foreground">ACS</span>
             </motion.div>
           </Link>
 
