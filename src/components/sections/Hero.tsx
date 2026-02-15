@@ -2,20 +2,59 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { HeroScene } from '@/components/3d/HeroScene';
+import heroImage from '@/assets/hero-aircraft.jpg';
+import airplaneImage from '@/assets/airplane.png';
 
 export function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Sky-like gradient background */}
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(210 60% 55%) 0%, hsl(210 70% 70%) 40%, hsl(30 60% 75%) 85%, hsl(20 70% 65%) 100%)' }} />
-      <div className="absolute inset-0 bg-primary/60" />
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="RC Aircraft in flight"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-primary/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
+      </div>
 
-      {/* 3D Aircraft floating above */}
-      <HeroScene />
+      {/* Animated flying airplane */}
+      <motion.img
+        src={airplaneImage}
+        alt="Flying airplane"
+        className="absolute w-32 sm:w-44 md:w-56 lg:w-64 z-[2] opacity-90 drop-shadow-2xl pointer-events-none"
+        initial={{ x: '-20vw', y: '10vh' }}
+        animate={{
+          x: ['−20vw', '110vw'],
+          y: ['12vh', '6vh', '10vh'],
+        }}
+        transition={{
+          x: { duration: 18, repeat: Infinity, ease: 'linear' },
+          y: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
+        }}
+        style={{ top: '10%' }}
+      />
+
+      {/* Second smaller airplane in background */}
+      <motion.img
+        src={airplaneImage}
+        alt=""
+        className="absolute w-16 sm:w-20 md:w-28 z-[1] opacity-40 pointer-events-none"
+        initial={{ x: '110vw', y: '25vh' }}
+        animate={{
+          x: ['110vw', '-20vw'],
+          y: ['25vh', '20vh', '28vh'],
+        }}
+        transition={{
+          x: { duration: 25, repeat: Infinity, ease: 'linear', delay: 5 },
+          y: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
+        }}
+        style={{ top: '5%', transform: 'scaleX(-1)' }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 container-custom text-center px-4 pt-32 md:pt-20">
+      <div className="relative z-10 container-custom text-center px-4 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -53,21 +92,13 @@ export function Hero() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button
-              variant="hero"
-              size="xl"
-              asChild
-            >
+            <Button variant="hero" size="xl" asChild>
               <Link to="/contact">
                 <Target className="w-5 h-5" />
                 Contact Us
               </Link>
             </Button>
-            <Button
-              variant="heroOutline"
-              size="xl"
-              asChild
-            >
+            <Button variant="heroOutline" size="xl" asChild>
               <Link to="/projects">Our Projects</Link>
             </Button>
           </motion.div>
