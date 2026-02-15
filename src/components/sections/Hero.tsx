@@ -3,7 +3,6 @@ import { ChevronDown, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-aircraft.jpg';
-import airplaneImage from '@/assets/airplane.png';
 
 export function Hero() {
   return (
@@ -19,39 +18,28 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
       </div>
 
-      {/* Animated flying airplane */}
-      <motion.img
-        src={airplaneImage}
-        alt="Flying airplane"
-        className="absolute w-32 sm:w-44 md:w-56 lg:w-64 z-[2] opacity-90 drop-shadow-2xl pointer-events-none"
-        initial={{ x: '-20vw', y: '10vh' }}
-        animate={{
-          x: ['−20vw', '110vw'],
-          y: ['12vh', '6vh', '10vh'],
-        }}
-        transition={{
-          x: { duration: 18, repeat: Infinity, ease: 'linear' },
-          y: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
-        }}
-        style={{ top: '10%' }}
-      />
-
-      {/* Second smaller airplane in background */}
-      <motion.img
-        src={airplaneImage}
-        alt=""
-        className="absolute w-16 sm:w-20 md:w-28 z-[1] opacity-40 pointer-events-none"
-        initial={{ x: '110vw', y: '25vh' }}
-        animate={{
-          x: ['110vw', '-20vw'],
-          y: ['25vh', '20vh', '28vh'],
-        }}
-        transition={{
-          x: { duration: 25, repeat: Infinity, ease: 'linear', delay: 5 },
-          y: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
-        }}
-        style={{ top: '5%', transform: 'scaleX(-1)' }}
-      />
+      {/* Animated Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-accent/40 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
 
       {/* Content */}
       <div className="relative z-10 container-custom text-center px-4 pt-20">
