@@ -2,44 +2,17 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import heroImage from '@/assets/hero-aircraft.jpg';
+import { HeroScene } from '@/components/3d/HeroScene';
 
 export function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="RC Aircraft in flight"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-primary/85" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
-      </div>
+      {/* Dark Background */}
+      <div className="absolute inset-0 bg-primary" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/95 to-primary" />
 
-      {/* Animated Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-accent/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
+      {/* 3D Scene */}
+      <HeroScene />
 
       {/* Content */}
       <div className="relative z-10 container-custom text-center px-4 pt-20">
