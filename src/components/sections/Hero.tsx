@@ -7,15 +7,15 @@ import { HeroScene } from '@/components/3d/HeroScene';
 export function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Dark Background */}
-      <div className="absolute inset-0 bg-primary" />
-      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/95 to-primary" />
+      {/* Dark Background with subtle gradient */}
+      <div className="absolute inset-0 hero-gradient" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent" />
 
-      {/* 3D Scene */}
+      {/* 3D Aircraft floating above */}
       <HeroScene />
 
       {/* Content */}
-      <div className="relative z-10 container-custom text-center px-4 pt-20">
+      <div className="relative z-10 container-custom text-center px-4 pt-32 md:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
