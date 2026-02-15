@@ -7,9 +7,9 @@ import { HeroScene } from '@/components/3d/HeroScene';
 export function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Dark Background with subtle gradient */}
-      <div className="absolute inset-0 hero-gradient" />
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent" />
+      {/* Sky-like gradient background */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, hsl(210 60% 55%) 0%, hsl(210 70% 70%) 40%, hsl(30 60% 75%) 85%, hsl(20 70% 65%) 100%)' }} />
+      <div className="absolute inset-0 bg-primary/60" />
 
       {/* 3D Aircraft floating above */}
       <HeroScene />
